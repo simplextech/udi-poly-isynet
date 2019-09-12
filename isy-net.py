@@ -191,30 +191,52 @@ class Controller(polyinterface.Controller):
         return list(val)
 
     def val_prec(self, val, nid):
-        poly_node = str(nid).lower()
+        # poly_node = str(nid).lower()
         r_node = self.isy.nodes[nid]
-        r_uom = r_node.uom
+        # r_uom = r_node.uom
         r_prec = int(r_node.prec)
         raw_val = str(val)
         split_val = self.val_split(raw_val)
 
         print('Precision: ' + str(r_prec))
-        if r_prec == 1:
-            _int = split_val[0:-r_prec]
-            _sep = ''
-            _v = _sep.join(_int)
-            _d = '0'
-            if _v is '':
-                _v = '0'
-            _val = '{0}.{1}'.format(_v, _d)
-        elif r_prec > 1:
-            _int = split_val[0:-r_prec]
-            _dec = split_val[-r_prec:]
+        # if r_prec == 1:
+        #     _int = split_val[0:-r_prec]
+        #     _sep = ''
+        #     _v = _sep.join(_int)
+        #     _d = '0'
+        #     if _v is '':
+        #         _v = '0'
+        #     if _d is '':
+        #         _d = '0'
+        #     _val = '{0}.{1}'.format(_v, _d)
+        # elif r_prec > 1:
+        #     _int = split_val[0:-r_prec]
+        #     _dec = split_val[-r_prec:]
+        #     _sep = ''
+        #     _v = _sep.join(_int)
+        #     _d = _sep.join(_dec)
+        #     if _v is '':
+        #         _v = '0'
+        #     if _d is '':
+        #         _d = '0'
+        #     _val = '{0}.{1}'.format(_v, _d)
+        # else:
+        #     _val = raw_val
+        if r_prec:
+            if r_prec > 1:
+                _int = split_val[0:-r_prec]
+                _dec = split_val[-r_prec:]
+            else:
+                _int = split_val[0:-1]
+                _dec = split_val[-1:]
             _sep = ''
             _v = _sep.join(_int)
             _d = _sep.join(_dec)
             if _v is '':
                 _v = '0'
+            if _d is '':
+                # _d = '0'
+                _d = '0' * r_prec
             _val = '{0}.{1}'.format(_v, _d)
         else:
             _val = raw_val
@@ -227,24 +249,8 @@ class Controller(polyinterface.Controller):
         poly_node = str(nid).lower()
         r_node = self.isy.nodes[nid]
         r_uom = r_node.uom
-        r_prec = int(r_node.prec)
+        # r_prec = int(r_node.prec)
         raw_val = str(e.handles)
-
-
-
-        # if r_prec > 1:
-        #     _val = self.val_prec(raw_val, nid)
-        #     self.nodes[poly_node].setDriver('ST', _val, uom=r_uom)
-
-        # if r_uom == '73':
-        #     split_val = self.val_split(raw_val)
-        #     _int = split_val[0:-r_prec]
-        #     _dec = split_val[-r_prec:]
-        #     _sep = ''
-        #     _v = _sep.join(_int)
-        #     _d = _sep.join(_dec)
-        #     _val = '{0}.{1}'.format(_v, _d)
-        #     self.nodes[poly_node].setDriver('ST', _val, uom=r_uom)
 
         if r_uom == '78':
             if raw_val == '255':
@@ -252,7 +258,10 @@ class Controller(polyinterface.Controller):
             else:
                 _val = raw_val
             self.nodes[poly_node].setDriver('ST', _val, uom=r_uom)
-        elif int(raw_val) > 1:
+        # elif r_uom == '67':
+        #     _val = raw_val
+        #     self.nodes[poly_node].setDriver('ST', _val, uom=r_uom)
+        elif raw_val is not '':
             _val = self.val_prec(raw_val, nid)
         else:
             _val = '0'
@@ -262,31 +271,20 @@ class Controller(polyinterface.Controller):
         # print(self, event)
         # print(help(event))
         # print(nid, event.nval, event.uom, event.prec, event.event)
-        print(nid, event, event.nval, event.uom, event.prec)
+        # print(nid, event, event.nval, event.uom, event.prec)
 
         poly_node = str(nid).lower()
         # r_node = self.isy.nodes[nid]
         r_uom = event.uom
-        r_prec = int(event.prec)
+        # r_prec = int(event.prec)
         raw_val = str(event.nval)
         r_event = event.event
 
-        # if r_prec > 1:
+        # if int(raw_val) > 1:
         #     _val = self.val_prec(raw_val, nid)
-        #     # split_val = self.val_split(raw_val)
-        #     # _int = split_val[0:-r_prec]
-        #     # _dec = split_val[-r_prec:]
-        #     # _sep = ''
-        #     # _v = _sep.join(_int)
-        #     # _d = _sep.join(_dec)
-        #     # _val = '{0}.{1}'.format(_v, _d)
         # else:
-        #     _val = raw_val
-
-        if int(raw_val) > 1:
-            _val = self.val_prec(raw_val, nid)
-        else:
-            _val = '0'
+        #     _val = '0'
+        _val = self.val_prec(raw_val, nid)
 
         if r_event == 'TPW':
             self.nodes[poly_node].setDriver('TPW', _val, uom=r_uom)
@@ -294,12 +292,16 @@ class Controller(polyinterface.Controller):
             self.nodes[poly_node].setDriver('CC', _val, uom=r_uom)
         if r_event == 'CV':
             self.nodes[poly_node].setDriver('CV', _val, uom=r_uom)
-        if r_event == 'CLIMD':
-            self.nodes[poly_node].setDriver('CLIMD', _val, uom=r_uom)
         if r_event == 'CLISPC':
             self.nodes[poly_node].setDriver('CLISPC', _val, uom=r_uom)
         if r_event == 'CLISPH':
             self.nodes[poly_node].setDriver('CLISPH', _val, uom=r_uom)
+        if r_event == 'CLIMD':
+            _val = raw_val
+            self.nodes[poly_node].setDriver('CLIMD', _val, uom=r_uom)
+        if r_event == 'CLIHCS':
+            _val = raw_val
+            self.nodes[poly_node].setDriver('CLIHCS', _val, uom=r_uom)
 
     def subscribe(self, nid):
         print('Subscribing to: ' + nid)
@@ -479,11 +481,25 @@ class TStatNode(polyinterface.Node):
 
     def start(self):
         nid = str(self.address).upper()
-        st = self.isy.nodes[nid].status
-        # if st == 255:
-        #     st = 100
-        self.setDriver('ST', str(st))
-        pass
+        n_uom = self.isy.nodes[nid].uom
+        raw_val = self.isy.nodes[nid].status
+        _val = self.controller.val_prec(raw_val, nid)
+        self.setDriver('ST', _val, uom=n_uom)
+
+    def set_heat_point(self, command):
+        nid = str(self.address).upper()
+        val = command.get('value')
+        self.isy.nodes[nid].send_cmd('CLISPH', val, uom='17')
+
+    def set_cool_point(self, command):
+        nid = str(self.address).upper()
+        val = command.get('value')
+        self.isy.nodes[nid].send_cmd('CLISPC', val, uom='4')
+
+    def set_mode(self, command):
+        nid = str(self.address).upper()
+        val = command.get('value')
+        self.isy.nodes[nid].send_cmd('CLIMD', val, uom='67')
 
     # def setOn(self, command):
     #     nid = str(self.address).upper()
@@ -511,6 +527,9 @@ class TStatNode(polyinterface.Node):
     id = 'TSTAT'
     commands = {
                     # 'DON': setOn, 'DOF': setOff
+                    'CLISPH': set_heat_point,
+                    'CLISPC': set_cool_point,
+                    'CLIMD': set_mode
                 }
 
 

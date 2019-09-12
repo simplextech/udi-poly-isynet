@@ -1,22 +1,22 @@
 {
-    "name": "PythonTemplate",
-    "docs": "https://github.com/Einstein42/udi-poly-template-python",
+    "name": "ISY-Net",
+    "docs": "https://github.com/simplextech/udi-poly-isynet",
     "type": "python3",
-    "executable": "template-poly.py",
+    "executable": "isy-net.py",
     "install": "install.sh",
     "install_cloud": "install_cloud.sh",
-    "description": "Template Node Server",
-    "notice": "Your disclaimer here",
+    "description": "ISY-Net Node Server",
+    "notice": "Alpha - Use your own risk",
     "shortPoll": "120",
     "longPoll": "240",
     "credits": [
         {
-            "title": "mypoly: a NodeServer for Template Integration",
-            "author": "James Milne (Einstein.42)",
-            "version": "2.0.5",
-            "date": "November 8, 2017",
-            "source": "https://github.com/Einstein42/udi-poly-template-python",
-            "license": "https://raw.githubusercontent.com/Einstein42/udi-poly-template-python/master/LICENSE"
+            "title": "ISY-Net: Mirror devices from one ISY to another",
+            "author": "Simplex Technology",
+            "version": "0.1.0",
+            "date": "September 12, 2019",
+            "source": "https://github.com/simplextech/udi-poly-isynet",
+            "license": "https://github.com/simplextech/udi-poly-isynet/blob/master/LICENSE"
         }
     ]
 }

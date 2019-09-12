@@ -26,7 +26,7 @@
     </editor>
 
     <editor id="CLITEMP">
-        <range uom="17" min="-50" max="143" step="1" prec="1" />
+        <range uom="17" min="32" max="122" step="1" prec="1" />
     </editor>
 
     <editor id="CLIMD">
@@ -34,11 +34,11 @@
     </editor>
 
     <editor id="CLISPC">
-        <range uom="17" min="-50" max="143" step="1" prec="1" />
+        <range uom="4" min="0" max="120" step="1" prec="1" />
     </editor>
 
     <editor id="CLISPH">
-        <range uom="17" min="-50" max="143" step="1" prec="1" />
+        <range uom="17" min="41" max="86" step="1" prec="1" />
     </editor>
 
     <editor id="CLIHCS">

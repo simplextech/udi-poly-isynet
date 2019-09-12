@@ -80,6 +80,15 @@
             <sends />
             <accepts>
                 <cmd id="QUERY" />
+                <cmd id="CLISPH">
+                    <p id="" editor="CLISPH"/>
+                </cmd>
+                <cmd id="CLISPC">
+                    <p id="" editor="CLISPC"/>
+                </cmd>
+                <cmd id="CLIMD">
+                    <p id="" editor="CLIMD"/>
+                </cmd>
             </accepts>
         </cmds>
     </nodeDef>
