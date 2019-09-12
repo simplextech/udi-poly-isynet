@@ -1,0 +1,86 @@
+<nodeDefs>
+    <!-- NODE DEF from 5.0 document http://wiki.universal-devices.com/index.php?title=V50_MAIN -->
+    <!-- controller, this must mach the id in your Controller class-->
+    <nodeDef id="controller" nls="ctl">
+        <editors />
+        <sts>
+			<st id="ST" editor="bool" />
+		</sts>
+        <cmds>
+            <sends />
+            <accepts>
+              <cmd id="QUERY" />
+              <cmd id="DISCOVER" />
+              <cmd id="REMOVE_NOTICES_ALL" />
+              <cmd id="REMOVE_NOTICE_TEST" />
+              <cmd id="UPDATE_PROFILE" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+	<!-- templatenodeid -->
+    <nodeDef id="templatenodeid" nls="tmplnode">
+        <editors />
+        <sts>
+            <st id="ST" editor="bool" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="DON" />
+                <cmd id="DOF" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+    <nodeDef id="SWITCH" nls="SWITCH">
+            <editors />
+            <sts>
+                <st id="ST" editor="STATUS" />
+            </sts>
+            <cmds>
+                <sends>
+                    <cmd id="DON" />
+                    <cmd id="DOF" />
+                </sends>
+                <accepts>
+                    <cmd id="DON" />
+                    <cmd id="DOF" />
+                    <cmd id="QUERY" />
+                </accepts>
+            </cmds>
+        </nodeDef>
+
+    <nodeDef id="EMETER" nls="EMETER">
+        <editors />
+        <sts>
+            <st id="ST" editor="CPW" />
+            <st id="TPW" editor="TPW" />
+            <st id="CC" editor="CC" />
+            <st id="CV" editor="CV" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+    <nodeDef id="TSTAT" nls="TSTAT">
+        <editors />
+        <sts>
+            <st id="ST" editor="CLITEMP" />
+            <st id="CLIMD" editor="CLIMD" />
+            <st id="CLISPC" editor="CLISPC" />
+            <st id="CLISPH" editor="CLISPH" />
+            <st id="CLIHCS" editor="CLIHCS"/>
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+</nodeDefs>

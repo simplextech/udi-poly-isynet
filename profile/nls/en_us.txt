@@ -1,0 +1,35 @@
+# controller
+ND-controller-NAME = Template NodeServer Controller
+CMD-ctl-QUERY"-NAME = Query
+CMD-ctl-DISCOVER-NAME = Re-Discover
+CMD-ctl-UPDATE_PROFILE-NAME = Update Profile
+CMD-ctl-REMOVE_NOTICES_ALL-NAME = Remove All Notices
+CMD-ctl-REMOVE_NOTICE_TEST-NAME = Remove Notice Test
+ST-ctl-ST-NAME = NodeServer Online
+
+#Generic for all Types
+CMD-DON-NAME = On
+CMD-DOF-NAME = Off
+
+# mynodetype
+ND-tmplnode-NAME = Template Node
+ST-tmplnode-ST-NAME = Node Status
+
+# Generic Switch Node
+ND-SWITCH-NAME = Generic Switch
+ND-SWITCH-ICON = Switch
+ST-SWITCH-ST-NAME = Status
+
+# Energy Meter
+ND-EMETER-NAME = Energy Meter
+ND-EMETER-ICON = EnergyMonitor
+ST-EMETER-ST-NAME = Status
+ST-EMETER-TPW-NAME = Total Power Used
+
+# Thermostat
+ND-TSTAT-NAME = Thermostat Node
+ND-TSTAT-ICON = Thermostat
+ST-TSTAT-ST-NAME = Temperature
+ST-TSTAT-CLIMD-NAME = Mode
+ST-TSTAT-CLISPC-NAME = Cool Set Point
+ST-TSTAT-CLISPH-NAME = Heat Set Point
