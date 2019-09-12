@@ -54,20 +54,9 @@ class Controller(polyinterface.Controller):
     def discover(self, *args, **kwargs):
         for nid in self.isy.nodes.nids:
             if re.match(r'^ZW', nid):
-                # print(self.isy.nodes[nid].type)
                 r_name = self.isy.nodes[nid].name
                 r_address = nid
-                # print(self.isy.nodes[nid].uom)
-                r_uom = self.isy.nodes[nid].uom
-                r_prec = self.isy.nodes[nid].prec
-                # r_parent = self.isy.nodes[nid].parent_node
-                # r_pnode = self.isy.nodes[nid].parent_node
-                # r_parent = r_pnode.nid
-                r_type = self.isy.nodes[nid].type
                 devtype_cat = self.isy.nodes[nid].devtype_cat
-                # print('DevType Cat: ' + devtype_cat)
-                # print('Type: ' + str(r_type))
-
                 m_name = str(r_name)
                 m_address = str(r_address).lower()
 
@@ -75,31 +64,24 @@ class Controller(polyinterface.Controller):
                     r_pnode = self.isy.nodes[nid].parent_node
                     r_parent = r_pnode.nid
                     m_parent = str(r_parent).lower()
-                    # print('Emeter Parent: ' + m_parent)
                 else:
                     m_parent = None
 
                 if devtype_cat == '121':
-                    # print(m_name, nid, r_uom, r_prec, m_parent)
                     if m_parent is None:
                         self.addNode(SwitchNode(self, m_address, m_address, m_name))
-                        # self.subscribe(nid)
                     else:
                         self.addNode(SwitchNode(self, m_parent, m_address, m_name))
                     self.subscribe(nid)
                 if devtype_cat == '143':
-                    # print(m_name, nid, r_uom, r_prec, m_parent)
                     if m_parent is None:
                         self.addNode(EmeterNode(self, m_address, m_address, m_name))
-                        # self.subscribe(nid)
                     else:
                         self.addNode(EmeterNode(self, m_parent, m_address, m_name))
                     self.subscribe(nid)
                 if devtype_cat == '140':
-                    # print(m_name, nid, r_uom, r_prec, m_parent)
                     if m_parent is None:
                         self.addNode(TStatNode(self, m_address, m_address, m_name))
-                        # self.subscribe(nid)
                     else:
                         self.addNode(TStatNode(self, m_parent, m_address, m_name))
                     self.subscribe(nid)
@@ -108,37 +90,11 @@ class Controller(polyinterface.Controller):
         return list(val)
 
     def val_prec(self, val, nid):
-        # poly_node = str(nid).lower()
         r_node = self.isy.nodes[nid]
-        # r_uom = r_node.uom
         r_prec = int(r_node.prec)
         raw_val = str(val)
         split_val = self.val_split(raw_val)
 
-        print('Precision: ' + str(r_prec))
-        # if r_prec == 1:
-        #     _int = split_val[0:-r_prec]
-        #     _sep = ''
-        #     _v = _sep.join(_int)
-        #     _d = '0'
-        #     if _v is '':
-        #         _v = '0'
-        #     if _d is '':
-        #         _d = '0'
-        #     _val = '{0}.{1}'.format(_v, _d)
-        # elif r_prec > 1:
-        #     _int = split_val[0:-r_prec]
-        #     _dec = split_val[-r_prec:]
-        #     _sep = ''
-        #     _v = _sep.join(_int)
-        #     _d = _sep.join(_dec)
-        #     if _v is '':
-        #         _v = '0'
-        #     if _d is '':
-        #         _d = '0'
-        #     _val = '{0}.{1}'.format(_v, _d)
-        # else:
-        #     _val = raw_val
         if r_prec:
             if r_prec > 1:
                 _int = split_val[0:-r_prec]
@@ -161,12 +117,10 @@ class Controller(polyinterface.Controller):
         return _val
 
     def notify(self, e, nid):
-        LOGGER.info('Notification Received')
-        # print(e)
+        # LOGGER.info('Notification Received')
         poly_node = str(nid).lower()
         r_node = self.isy.nodes[nid]
         r_uom = r_node.uom
-        # r_prec = int(r_node.prec)
         raw_val = str(e.handles)
 
         if r_uom == '78':
@@ -175,9 +129,6 @@ class Controller(polyinterface.Controller):
             else:
                 _val = raw_val
             self.nodes[poly_node].setDriver('ST', _val, uom=r_uom)
-        # elif r_uom == '67':
-        #     _val = raw_val
-        #     self.nodes[poly_node].setDriver('ST', _val, uom=r_uom)
         elif raw_val is not '':
             _val = self.val_prec(raw_val, nid)
         else:
@@ -185,22 +136,11 @@ class Controller(polyinterface.Controller):
         self.nodes[poly_node].setDriver('ST', _val, uom=r_uom)
 
     def on_control(self, event, nid):
-        # print(self, event)
-        # print(help(event))
-        # print(nid, event.nval, event.uom, event.prec, event.event)
-        # print(nid, event, event.nval, event.uom, event.prec)
-
         poly_node = str(nid).lower()
-        # r_node = self.isy.nodes[nid]
         r_uom = event.uom
-        # r_prec = int(event.prec)
         raw_val = str(event.nval)
         r_event = event.event
 
-        # if int(raw_val) > 1:
-        #     _val = self.val_prec(raw_val, nid)
-        # else:
-        #     _val = '0'
         _val = self.val_prec(raw_val, nid)
 
         if r_event == 'TPW':
@@ -221,20 +161,13 @@ class Controller(polyinterface.Controller):
             self.nodes[poly_node].setDriver('CLIHCS', _val, uom=r_uom)
 
     def subscribe(self, nid):
-        print('Subscribing to: ' + nid)
+        LOGGER.info('Subscribing to: ' + nid)
         isy_node = self.isy.nodes[nid]
         isy_node.status.subscribe('changed', partial(self.notify, nid=nid))
-        control_handler = isy_node.controlEvents.subscribe(partial(self.on_control, nid=nid))
-        # print(control_handler)
+        isy_node.controlEvents.subscribe(partial(self.on_control, nid=nid))
 
     def delete(self):
-        """
-        Example
-        This is sent by Polyglot upon deletion of the NodeServer. If the process is
-        co-resident and controlled by Polyglot, it will be terminiated within 5 seconds
-        of receiving this message.
-        """
-        LOGGER.info('Oh God I\'m being deleted. Nooooooooooooooooooooooooooooooooooooooooo.')
+        LOGGER.info('Removing ISY-Net')
 
     def stop(self):
         LOGGER.debug('NodeServer stopped.')
@@ -360,20 +293,8 @@ class EmeterNode(polyinterface.Node):
     def start(self):
         nid = str(self.address).upper()
         st = self.isy.nodes[nid].status
-        # if st == 255:
-        #     st = 100
         self.setDriver('ST', str(st))
         pass
-
-    # def setOn(self, command):
-    #     nid = str(self.address).upper()
-    #     self.isy.nodes[nid].on()
-    #     self.setDriver('ST', 100)
-    #
-    # def setOff(self, command):
-    #     nid = str(self.address).upper()
-    #     self.isy.nodes[nid].off()
-    #     self.setDriver('ST', 0)
 
     def query(self):
         self.reportDrivers()
@@ -420,16 +341,6 @@ class TStatNode(polyinterface.Node):
         val = command.get('value')
         self.isy.nodes[nid].send_cmd('CLIMD', val, uom='67')
 
-    # def setOn(self, command):
-    #     nid = str(self.address).upper()
-    #     self.isy.nodes[nid].on()
-    #     self.setDriver('ST', 100)
-    #
-    # def setOff(self, command):
-    #     nid = str(self.address).upper()
-    #     self.isy.nodes[nid].off()
-    #     self.setDriver('ST', 0)
-
     def query(self):
         self.reportDrivers()
 
@@ -445,7 +356,6 @@ class TStatNode(polyinterface.Node):
 
     id = 'TSTAT'
     commands = {
-                    # 'DON': setOn, 'DOF': setOff
                     'CLISPH': set_heat_point,
                     'CLISPC': set_cool_point,
                     'CLIMD': set_mode
