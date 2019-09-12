@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-"""
-This is a NodeServer template for Polyglot v2 written in Python2/3
-by Einstein.42 (James Milne) milne.james@gmail.com
-"""
+
 from functools import partial
 
 try:
@@ -10,7 +7,6 @@ try:
 except ImportError:
     import pgc_interface as polyinterface
 import sys
-import time
 import PyISY
 import re
 
