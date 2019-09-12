@@ -108,7 +108,6 @@ class Controller(polyinterface.Controller):
             if _v is '':
                 _v = '0'
             if _d is '':
-                # _d = '0'
                 _d = '0' * r_prec
             _val = '{0}.{1}'.format(_v, _d)
         else:
