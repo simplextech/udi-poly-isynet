@@ -154,7 +154,8 @@ class Controller(polyinterface.Controller):
         return _val
 
     def notify(self, e, nid):
-        # LOGGER.info('Notification Received')
+        LOGGER.info('Notification Received')
+        print(nid, e.handles)
         poly_node = str(nid).lower()
         r_node = self.isy.nodes[nid]
         r_uom = r_node.uom
@@ -173,6 +174,7 @@ class Controller(polyinterface.Controller):
         self.nodes[poly_node].setDriver('ST', _val, uom=r_uom)
 
     def on_control(self, event, nid):
+        print(event)
         poly_node = str(nid).lower()
         r_uom = event.uom
         raw_val = str(event.nval)
@@ -196,6 +198,15 @@ class Controller(polyinterface.Controller):
         if r_event == 'CLIHCS':
             _val = raw_val
             self.nodes[poly_node].setDriver('CLIHCS', _val, uom=r_uom)
+        if r_event == 'CLIHUM':
+            _val = raw_val
+            self.nodes[poly_node].setDriver('CLIHUM', _val, uom=r_uom)
+        if r_event == 'CLITEMP':
+            _val = raw_val
+            self.nodes[poly_node].setDriver('CLITEMP', _val, uom=r_uom)
+        if r_event == 'LUMIN':
+            _val = raw_val
+            self.nodes[poly_node].setDriver('LUMIN', _val, uom=r_uom)
 
     def subscribe(self, nid):
         LOGGER.info('Subscribing to: ' + nid)
