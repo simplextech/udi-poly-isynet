@@ -127,19 +127,30 @@ class Controller(polyinterface.Controller):
     def val_split(self, val):
         return list(val)
 
-    def val_prec(self, val, nid):
+    def val_prec(self, val, nid, prec=None):
         r_node = self.isy.nodes[nid]
-        r_prec = int(r_node.prec)
+        _prec = prec if prec is not None else None
+        if _prec is None:
+            r_prec = int(r_node.prec)
+        else:
+            r_prec = int(_prec)
+        print('Prec: ' + str(r_prec))
+
         raw_val = str(val)
         split_val = self.val_split(raw_val)
 
         if r_prec:
             if r_prec > 1:
+                print(raw_val)
                 _int = split_val[0:-r_prec]
                 _dec = split_val[-r_prec:]
+                print(_int)
+                print(_dec)
             else:
                 _int = split_val[0:-1]
                 _dec = split_val[-1:]
+                print(_int)
+                print(_dec)
             _sep = ''
             _v = _sep.join(_int)
             _d = _sep.join(_dec)
@@ -150,7 +161,7 @@ class Controller(polyinterface.Controller):
             _val = '{0}.{1}'.format(_v, _d)
         else:
             _val = raw_val
-
+        print(_val)
         return _val
 
     def notify(self, e, nid):
@@ -175,12 +186,15 @@ class Controller(polyinterface.Controller):
 
     def on_control(self, event, nid):
         print(event)
+        print(event.prec)
         poly_node = str(nid).lower()
         r_uom = event.uom
         raw_val = str(event.nval)
         r_event = event.event
 
-        _val = self.val_prec(raw_val, nid)
+        _prec = event.prec if event.prec is not None else None
+
+        _val = self.val_prec(raw_val, nid, _prec)
 
         if r_event == 'TPW':
             self.nodes[poly_node].setDriver('TPW', _val, uom=r_uom)
@@ -196,17 +210,15 @@ class Controller(polyinterface.Controller):
             _val = raw_val
             self.nodes[poly_node].setDriver('CLIMD', _val, uom=r_uom)
         if r_event == 'CLIHCS':
-            _val = raw_val
             self.nodes[poly_node].setDriver('CLIHCS', _val, uom=r_uom)
         if r_event == 'CLIHUM':
-            _val = raw_val
             self.nodes[poly_node].setDriver('CLIHUM', _val, uom=r_uom)
         if r_event == 'CLITEMP':
-            _val = raw_val
             self.nodes[poly_node].setDriver('CLITEMP', _val, uom=r_uom)
         if r_event == 'LUMIN':
-            _val = raw_val
             self.nodes[poly_node].setDriver('LUMIN', _val, uom=r_uom)
+        if r_event == 'BATLVL':
+            self.nodes[poly_node].setDriver('BATLVL', _val, uom=r_uom)
 
     def subscribe(self, nid):
         LOGGER.info('Subscribing to: ' + nid)
