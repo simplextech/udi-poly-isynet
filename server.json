@@ -13,7 +13,7 @@
         {
             "title": "ISY-Net: Mirror devices from one ISY to another",
             "author": "Simplex Technology",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "date": "September 12, 2019",
             "source": "https://github.com/simplextech/udi-poly-isynet",
             "license": "https://github.com/simplextech/udi-poly-isynet/blob/master/LICENSE"
