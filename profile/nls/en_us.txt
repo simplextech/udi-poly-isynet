@@ -32,4 +32,41 @@ ST-TSTAT-CLISPH-NAME = Heat Set Point
 CMD-TSTAT-CLISPH-NAME = Heat Set Point
 CMD-TSTAT-CLIMD-NAME = Mode
 
+# Notify Sensor
+ND-NOTIFY-NAME = Notify Sensor
+ND-NOTIFY-ICON = GenericCtl
+ST-NOTIFY-ST-NAME = Status
+ST-NOTIFY-BATLVL-NAME = Battery Level
 
+# Multilevel Sensor
+ND-MLSENSOR-NAME = Multilevel Sensor
+ND-MLSENSOR-ICON = GenericCtl
+ST-MLSENSOR-ST-NAME = Status
+ST-MLSENSOR-CLIHUM-NAME = Humidity
+ST-MLSENSOR-CLITEMP-NAME = Temperature
+ST-MLSENSOR-LUMIN-NAME =  Luminance
+
+# Motion Sensor
+ND-MSSENSOR-NAME = Multilevel Sensor
+ND-MSSENSOR-ICON = MotionSensor
+ST-MSSENSOR-ST-NAME = Status
+
+# Intrusion Alarm Sensor
+ND-INTRUSION-NAME = Multilevel Sensor
+ND-INTRUSION-ICON = GenericCtl
+ST-INTRUSION-ST-NAME = Status
+
+# Tamper Alarm Sensor
+ND-TMPERALRM-NAME = Multilevel Sensor
+ND-TMPERALRM-ICON = GenericCtl
+ST-TMPERALRM-ST-NAME = Status
+
+# Tamper Alarm Code Sensor
+ND-TMPERCODE-NAME = Multilevel Sensor
+ND-TMPERCODE-ICON = GenericCtl
+ST-TMPERCODE-ST-NAME = Status
+
+# Glass Break Alarm Sensor
+ND-GLASSBRK-NAME = Multilevel Sensor
+ND-GLASSBRK-ICON = GenericCtl
+ST-GLASSBRK-ST-NAME = Status

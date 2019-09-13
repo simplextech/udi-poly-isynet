@@ -45,5 +45,18 @@
         <range uom="66" subset="0-11" />
     </editor>
 
+    <editor id="BATLVL">
+        <range uom="51" min="0" max="100" />
+    </editor>
+
+    <editor id="CLIHUM">
+		<range uom="22" min="10" max="100" prec="2" />
+	</editor>
+
+    <editor id="LUMIN">
+		<range uom="51" min="0" max="200000" prec="2" />
+	</editor>
+
+
 
 </editors>

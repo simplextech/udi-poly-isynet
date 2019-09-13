@@ -63,23 +63,65 @@ class Controller(polyinterface.Controller):
                 else:
                     m_parent = None
 
-                if devtype_cat == '121':
+                if devtype_cat == '121':    # Switch
                     if m_parent is None:
                         self.addNode(SwitchNode(self, m_address, m_address, m_name))
                     else:
                         self.addNode(SwitchNode(self, m_parent, m_address, m_name))
                     self.subscribe(nid)
-                if devtype_cat == '143':
+                if devtype_cat == '143':    # Energy Meter
                     if m_parent is None:
                         self.addNode(EmeterNode(self, m_address, m_address, m_name))
                     else:
                         self.addNode(EmeterNode(self, m_parent, m_address, m_name))
                     self.subscribe(nid)
-                if devtype_cat == '140':
+                if devtype_cat == '140':    # Thermostat
                     if m_parent is None:
                         self.addNode(TStatNode(self, m_address, m_address, m_name))
                     else:
                         self.addNode(TStatNode(self, m_parent, m_address, m_name))
+                    self.subscribe(nid)
+                if devtype_cat == '185':    # Notify Sensor
+                    if m_parent is None:
+                        self.addNode(NotifySensorNode(self, m_address, m_address, m_name))
+                    else:
+                        self.addNode(NotifySensorNode(self, m_parent, m_address, m_name))
+                    self.subscribe(nid)
+                if devtype_cat == '118':    # Multilevel Sensor
+                    if m_parent is None:
+                        self.addNode(MultilevelSensorNode(self, m_address, m_address, m_name))
+                    else:
+                        self.addNode(MultilevelSensorNode(self, m_parent, m_address, m_name))
+                    self.subscribe(nid)
+                if devtype_cat == '155':    # Motion Sensor
+                    if m_parent is None:
+                        self.addNode(MotionSensorNode(self, m_address, m_address, m_name))
+                    else:
+                        self.addNode(MotionSensorNode(self, m_parent, m_address, m_name))
+                    self.subscribe(nid)
+                if devtype_cat == '172':    # Intrusion Alarm
+                    if m_parent is None:
+                        self.addNode(IntrusionAlarmNode(self, m_address, m_address, m_name))
+                    else:
+                        self.addNode(IntrusionAlarmNode(self, m_parent, m_address, m_name))
+                    self.subscribe(nid)
+                if devtype_cat == '157':    # Tamper Alarm
+                    if m_parent is None:
+                        self.addNode(TamperAlarmNode(self, m_address, m_address, m_name))
+                    else:
+                        self.addNode(TamperAlarmNode(self, m_parent, m_address, m_name))
+                    self.subscribe(nid)
+                if devtype_cat == '173':    # Tamper Alarm Code
+                    if m_parent is None:
+                        self.addNode(TamperAlarmCodeNode(self, m_address, m_address, m_name))
+                    else:
+                        self.addNode(TamperAlarmCodeNode(self, m_parent, m_address, m_name))
+                    self.subscribe(nid)
+                if devtype_cat == '153':    # Tamper Alarm Code
+                    if m_parent is None:
+                        self.addNode(GlassBreakAlarmNode(self, m_address, m_address, m_name))
+                    else:
+                        self.addNode(GlassBreakAlarmNode(self, m_parent, m_address, m_name))
                     self.subscribe(nid)
 
     def val_split(self, val):
@@ -354,6 +396,190 @@ class TStatNode(polyinterface.Node):
                     'CLISPH': set_heat_point,
                     'CLISPC': set_cool_point,
                     'CLIMD': set_mode
+                }
+
+
+class NotifySensorNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, name):
+        super(NotifySensorNode, self).__init__(controller, primary, address, name)
+        self.isy = self.controller.isy
+
+    def start(self):
+        # nid = str(self.address).upper()
+        # st = self.isy.nodes[nid].status
+        # self.setDriver('BATLVL', str(st))
+        pass
+
+    def query(self):
+        self.reportDrivers()
+
+    "Hints See: https://github.com/UniversalDevicesInc/hints"
+    hint = [1,2,3,4]
+    drivers = [
+        {'driver': 'BATLVL', 'value': 0, 'uom': 51}
+    ]
+
+    id = 'NOTIFY'
+    commands = {
+                    # 'DON': setOn, 'DOF': setOff
+                }
+
+
+class MultilevelSensorNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, name):
+        super(MultilevelSensorNode, self).__init__(controller, primary, address, name)
+        self.isy = self.controller.isy
+
+    def start(self):
+        # nid = str(self.address).upper()
+        # st = self.isy.nodes[nid].status
+        # self.setDriver('BATLVL', str(st))
+        pass
+
+    def query(self):
+        self.reportDrivers()
+
+    "Hints See: https://github.com/UniversalDevicesInc/hints"
+    hint = [1,2,3,4]
+    drivers = [
+        {'driver': 'CLIHUM', 'value': 0, 'uom': 22},
+        {'driver': 'CLITEMP', 'value': 0, 'uom': 17},
+        {'driver': 'LUMIN', 'value': 0, 'uom': 51},
+    ]
+
+    id = 'MLSENSOR'
+    commands = {
+                    # 'DON': setOn, 'DOF': setOff
+                }
+
+
+class MotionSensorNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, name):
+        super(MotionSensorNode, self).__init__(controller, primary, address, name)
+        self.isy = self.controller.isy
+
+    def start(self):
+        # nid = str(self.address).upper()
+        # st = self.isy.nodes[nid].status
+        # self.setDriver('BATLVL', str(st))
+        pass
+
+    def query(self):
+        self.reportDrivers()
+
+    "Hints See: https://github.com/UniversalDevicesInc/hints"
+    hint = [1,2,3,4]
+    drivers = [
+        {'driver': 'ST', 'value': 0, 'uom': 78}
+    ]
+
+    id = 'MSSENSOR'
+    commands = {
+                    # 'DON': setOn, 'DOF': setOff
+                }
+
+
+class IntrusionAlarmNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, name):
+        super(IntrusionAlarmNode, self).__init__(controller, primary, address, name)
+        self.isy = self.controller.isy
+
+    def start(self):
+        # nid = str(self.address).upper()
+        # st = self.isy.nodes[nid].status
+        # self.setDriver('BATLVL', str(st))
+        pass
+
+    def query(self):
+        self.reportDrivers()
+
+    "Hints See: https://github.com/UniversalDevicesInc/hints"
+    hint = [1,2,3,4]
+    drivers = [
+        {'driver': 'ST', 'value': 0, 'uom': 78}
+    ]
+
+    id = 'INTRUSION'
+    commands = {
+                    # 'DON': setOn, 'DOF': setOff
+                }
+
+
+class TamperAlarmNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, name):
+        super(TamperAlarmNode, self).__init__(controller, primary, address, name)
+        self.isy = self.controller.isy
+
+    def start(self):
+        # nid = str(self.address).upper()
+        # st = self.isy.nodes[nid].status
+        # self.setDriver('BATLVL', str(st))
+        pass
+
+    def query(self):
+        self.reportDrivers()
+
+    "Hints See: https://github.com/UniversalDevicesInc/hints"
+    hint = [1,2,3,4]
+    drivers = [
+        {'driver': 'ST', 'value': 0, 'uom': 78}
+    ]
+
+    id = 'TMPERALRM'
+    commands = {
+                    # 'DON': setOn, 'DOF': setOff
+                }
+
+
+class TamperAlarmCodeNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, name):
+        super(TamperAlarmCodeNode, self).__init__(controller, primary, address, name)
+        self.isy = self.controller.isy
+
+    def start(self):
+        # nid = str(self.address).upper()
+        # st = self.isy.nodes[nid].status
+        # self.setDriver('BATLVL', str(st))
+        pass
+
+    def query(self):
+        self.reportDrivers()
+
+    "Hints See: https://github.com/UniversalDevicesInc/hints"
+    hint = [1,2,3,4]
+    drivers = [
+        {'driver': 'ST', 'value': 0, 'uom': 78}
+    ]
+
+    id = 'TMPERCODE'
+    commands = {
+                    # 'DON': setOn, 'DOF': setOff
+                }
+
+
+class GlassBreakAlarmNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, name):
+        super(GlassBreakAlarmNode, self).__init__(controller, primary, address, name)
+        self.isy = self.controller.isy
+
+    def start(self):
+        # nid = str(self.address).upper()
+        # st = self.isy.nodes[nid].status
+        # self.setDriver('BATLVL', str(st))
+        pass
+
+    def query(self):
+        self.reportDrivers()
+
+    "Hints See: https://github.com/UniversalDevicesInc/hints"
+    hint = [1,2,3,4]
+    drivers = [
+        {'driver': 'ST', 'value': 0, 'uom': 78}
+    ]
+
+    id = 'GLASSBRK'
+    commands = {
+                    # 'DON': setOn, 'DOF': setOff
                 }
 
 

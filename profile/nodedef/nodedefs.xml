@@ -11,24 +11,9 @@
             <accepts>
               <cmd id="QUERY" />
               <cmd id="DISCOVER" />
-              <cmd id="REMOVE_NOTICES_ALL" />
-              <cmd id="REMOVE_NOTICE_TEST" />
+<!--              <cmd id="REMOVE_NOTICES_ALL" />-->
+<!--              <cmd id="REMOVE_NOTICE_TEST" />-->
               <cmd id="UPDATE_PROFILE" />
-            </accepts>
-        </cmds>
-    </nodeDef>
-
-	<!-- templatenodeid -->
-    <nodeDef id="templatenodeid" nls="tmplnode">
-        <editors />
-        <sts>
-            <st id="ST" editor="bool" />
-        </sts>
-        <cmds>
-            <sends />
-            <accepts>
-                <cmd id="DON" />
-                <cmd id="DOF" />
             </accepts>
         </cmds>
     </nodeDef>
@@ -92,4 +77,99 @@
             </accepts>
         </cmds>
     </nodeDef>
+
+    <nodeDef id="NOTIFY" nls="NOTIFY">
+        <editors />
+        <sts>
+            <st id="BATLVL" editor="BATLVL" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+    <nodeDef id="MLSENSOR" nls="MLSENSOR">
+        <editors />
+        <sts>
+            <st id="CLIHUM" editor="CLIHUM" />
+            <st id="CLITEMP" editor="CLITEMP" />
+            <st id="LUMIN" editor="LUMIN" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+    <nodeDef id="MSSENSOR" nls="MSSENSOR">
+        <editors />
+        <sts>
+            <st id="ST" editor="STATUS" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+    <nodeDef id="INTRUSION" nls="INTRUSION">
+        <editors />
+        <sts>
+            <st id="ST" editor="STATUS" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+    <nodeDef id="TMPERALRM" nls="TMPERALRM">
+        <editors />
+        <sts>
+            <st id="ST" editor="STATUS" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+    <nodeDef id="TMPERCODE" nls="TMPERCODE">
+        <editors />
+        <sts>
+            <st id="ST" editor="STATUS" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+    <nodeDef id="GLASSBRK" nls="GLASSBRK">
+        <editors />
+        <sts>
+            <st id="ST" editor="STATUS" />
+        </sts>
+        <cmds>
+            <sends />
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+
+
 </nodeDefs>
