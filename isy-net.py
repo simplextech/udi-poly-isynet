@@ -123,6 +123,12 @@ class Controller(polyinterface.Controller):
                     else:
                         self.addNode(GlassBreakAlarmNode(self, m_parent, m_address, m_name))
                     self.subscribe(nid)
+                if devtype_cat == '111':    # Tamper Alarm Code
+                    if m_parent is None:
+                        self.addNode(DeadBoltNode(self, m_address, m_address, m_name))
+                    else:
+                        self.addNode(DeadBoltNode(self, m_parent, m_address, m_name))
+                    self.subscribe(nid)
 
     def val_split(self, val):
         return list(val)
@@ -604,6 +610,58 @@ class GlassBreakAlarmNode(polyinterface.Node):
     id = 'GLASSBRK'
     commands = {
                     # 'DON': setOn, 'DOF': setOff
+                }
+
+
+class DeadBoltNode(polyinterface.Node):
+    def __init__(self, controller, primary, address, name):
+        super(DeadBoltNode, self).__init__(controller, primary, address, name)
+        self.isy = self.controller.isy
+
+    def start(self):
+        nid = str(self.address).upper()
+        st = self.isy.nodes[nid].status
+        if st == 255:
+            st = 100
+        self.setDriver('ST', str(st))
+        pass
+
+    # def setOn(self, command):
+    #     nid = str(self.address).upper()
+    #     self.isy.nodes[nid].on()
+    #     self.setDriver('ST', 100)
+    #
+    # def setOff(self, command):
+    #     nid = str(self.address).upper()
+    #     self.isy.nodes[nid].off()
+    #     self.setDriver('ST', 0)
+
+    def lock(self, command):
+        nid = str(self.address).upper()
+        self.isy.nodes[nid].secure_lock()
+
+    def unlock(self, command):
+        nid = str(self.address).upper()
+        self.isy.nodes[nid].secure_unlock()
+
+    def query(self):
+        nid = str(self.address).upper()
+        st = self.isy.nodes[nid].status
+        self.setDriver('ST', str(st))
+        self.reportDrivers()
+
+    "Hints See: https://github.com/UniversalDevicesInc/hints"
+    # hint = [1,2,3,4]
+    drivers = [
+        {'driver': 'ST', 'value': 0, 'uom': 11},
+        {'driver': 'BATLVL', 'value': 0, 'uom': 51},
+        {'driver': 'USRNUM', 'value': 0, 'uom': 0},
+    ]
+
+    id = 'DBLOCK'
+    commands = {
+                    # 'DON': setOn, 'DOF': setOff
+                    'LOCK': lock, 'UNLOCK': unlock
                 }
 
 

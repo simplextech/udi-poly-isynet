@@ -57,6 +57,15 @@
 		<range uom="51" min="0" max="200000" prec="2" />
 	</editor>
 
+     <editor id="USRNUM">
+		<range uom="0" min="0" max="30" />
+	</editor>
+
+    <editor id="LCKSTATUS">
+        <range uom="11" subset="0,100,101,102" />
+
+	</editor>
+
 
 
 </editors>
