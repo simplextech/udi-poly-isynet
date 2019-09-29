@@ -4,7 +4,6 @@
     "type": "python3",
     "executable": "isy-net.py",
     "install": "install.sh",
-    "install_cloud": "install_cloud.sh",
     "description": "ISY-Net Node Server",
     "notice": "Alpha - Use your own risk",
     "shortPoll": "120",
